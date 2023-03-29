@@ -1,2 +1,2 @@
 # Speedle
-a node.js download tool, based on axios.
+A node.js download tool, based on axios.
