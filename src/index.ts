@@ -78,7 +78,7 @@ class Speedle {
     this.download(0, this.totalSize - 1)
   }
 
-  pause() {
+  public pause() {
     if (this.status !== DownloadStatus.DOWNLOADING) {
       throw new Error(`Unable to call "pause()" because current download status is not ${DownloadStatus.DOWNLOADING}`)
     }
@@ -88,7 +88,7 @@ class Speedle {
     this.config.onPause?.()
   }
 
-  resume() {
+  public resume() {
     if (this.status !== DownloadStatus.PAUSED) {
       throw new Error(`Unable to call "resume()" because current download status is not ${DownloadStatus.PAUSED}`)
     }
