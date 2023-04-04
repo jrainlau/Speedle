@@ -17,4 +17,5 @@ export type SpeedleConfig = {
   onComplete?: () => void;
   onError?: (error: any) => void;
   onCancel?: () => void;
+  onRetry?: () => void;
 }

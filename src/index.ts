@@ -168,6 +168,7 @@ class Speedle {
   private retry() {
     this.retryTimes -= 1
     this.status = DownloadStatus.RETRIED
+    this.config.onRetry?.()
     this.download(this.downloadedBytes, this.totalSize - 1)
   }
 }
