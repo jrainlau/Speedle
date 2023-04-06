@@ -54,7 +54,7 @@ class Speedle {
 
     this.config.onStart?.()
 
-    const res = await axios.head(url, { headers })
+    const res = await axios.head(url, { headers }).catch(e => e)
     if (res.status !== 200) {
 
       this.config?.onError?.(res);
@@ -76,7 +76,7 @@ class Speedle {
     }
 
     this.stream = fs.createWriteStream(finalOutputPath, { flags: 'a' })
-    this.download(0, this.totalSize - 1)
+    return this.download(0, this.totalSize - 1)
   }
 
   public pause() {
@@ -89,13 +89,13 @@ class Speedle {
     this.config.onPause?.()
   }
 
-  public resume() {
+  public async resume() {
     if (this.status !== DownloadStatus.PAUSED) {
       throw new Error(`Unable to call "resume()" because current download status is not ${DownloadStatus.PAUSED}`)
     }
     this.status = DownloadStatus.RESUMED
     this.config.onResume?.()
-    this.download(this.downloadedBytes, this.totalSize - 1)
+    return this.download(this.downloadedBytes, this.totalSize - 1)
   }
 
   public async cancel() {
@@ -105,6 +105,7 @@ class Speedle {
 
     this.status = DownloadStatus.CANCELED
     this.controller?.cancel()
+    this.config.onCancel?.()
     fs.unlinkSync(this.config.outputPath)
   }
 
@@ -117,9 +118,7 @@ class Speedle {
 
     const { url, headers, timeout } = this.config
 
-    axios({
-      method: 'get',
-      url,
+    const axiosRes = await axios.get(url, {
       headers: {
         ...headers,
         Range: `bytes=${start}-${end}`
@@ -146,6 +145,7 @@ class Speedle {
         response.data.on('close', () => {
           if (this.status === DownloadStatus.PAUSED || this.status === DownloadStatus.CANCELED) return
           clearTimeout(this.timer)
+          this.status = DownloadStatus.COMPLETED
     
           this.config.onComplete?.()
         })
@@ -163,13 +163,16 @@ class Speedle {
         this.status = DownloadStatus.CANCELED
         this.config.onError?.(error)
       })
+
+    return axiosRes
   }
 
-  private retry() {
+  private async retry() {
     this.retryTimes -= 1
     this.status = DownloadStatus.RETRIED
+    console.log('xxx')
     this.config.onRetry?.()
-    this.download(this.downloadedBytes, this.totalSize - 1)
+    return this.download(this.downloadedBytes, this.totalSize - 1)
   }
 }
 
