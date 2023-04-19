@@ -1,7 +1,7 @@
-const typescript = require('rollup-plugin-typescript2')
-const { generateDtsBundle } = require('rollup-plugin-dts-bundle-generator')
+import typescript from 'rollup-plugin-typescript2'
+import { generateDtsBundle } from 'rollup-plugin-dts-bundle-generator'
 
-module.exports = {
+export default {
   input: 'src/index.ts',
   output: {
     file: 'dist/index.js',

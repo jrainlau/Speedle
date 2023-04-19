@@ -99,10 +99,6 @@ class Speedle {
   }
 
   public async cancel() {
-    if (this.status !== DownloadStatus.DOWNLOADING) {
-      throw new Error(`Unable to call "resume()" because current download status is not ${DownloadStatus.DOWNLOADING}`)
-    }
-
     this.status = DownloadStatus.CANCELED
     this.controller?.cancel()
     this.config.onCancel?.()

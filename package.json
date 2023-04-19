@@ -1,6 +1,6 @@
 {
   "name": "speedle",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "scripts": {
     "build": "rollup -c",
@@ -9,6 +9,7 @@
   "repository": "https://github.com/jrainlau/Speedle.git",
   "author": "jrainliu <jrainliu@tencent.com>",
   "license": "MIT",
+  "type": "module",
   "types": "dist/@types/index.d.ts",
   "devDependencies": {
     "@types/jest": "^29.5.0",
