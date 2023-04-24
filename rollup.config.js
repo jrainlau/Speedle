@@ -3,11 +3,15 @@ import { generateDtsBundle } from 'rollup-plugin-dts-bundle-generator'
 
 export default {
   input: 'src/index.ts',
-  output: {
+  output: [{
     file: 'dist/index.js',
     format: 'es',
     name: 'Speedle',
-  },
+  }, {
+    file: 'dist/index.cjs',
+    format: 'cjs',
+    name: 'Speedle',
+  }],
   plugins: [
     typescript({
       tsconfig: './tsconfig.json',

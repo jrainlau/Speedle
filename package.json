@@ -1,6 +1,6 @@
 {
   "name": "speedle",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "dist/index.js",
   "scripts": {
     "build": "rollup -c",
@@ -11,6 +11,14 @@
   "license": "MIT",
   "type": "module",
   "types": "dist/@types/index.d.ts",
+  "exports": {
+    ".": {
+      "default": {
+        "require": "./dist/index.cjs",
+        "default": "./dist/index.js"
+      }
+    }
+  },
   "devDependencies": {
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.3",
