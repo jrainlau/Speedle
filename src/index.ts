@@ -102,6 +102,7 @@ class Speedle {
     this.status = DownloadStatus.CANCELED
     this.controller?.cancel()
     this.config.onCancel?.()
+    this.stream?.close?.()
     fs.unlinkSync(this.config.outputPath)
   }
 
