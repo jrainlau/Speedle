@@ -103,7 +103,9 @@ class Speedle {
     this.controller?.cancel()
     this.config.onCancel?.()
     this.stream?.close?.()
-    fs.unlinkSync(this.config.outputPath)
+    if (fs.existsSync(this.config.outputPath)) {
+      fs.unlinkSync(this.config.outputPath)
+    }
   }
 
   private async download(start, end) {
